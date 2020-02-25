@@ -9,19 +9,23 @@ import java.util.*;
 public class BeerSelect extends HttpServlet {
   public void doPost(HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException{
-    response.setContentType("text/html");
-    PrintWriter out = response.getWriter();
 
-    out.println("Beer Selection Advice<br>");
     String c = request.getParameter("color");
     BeerExpert be = new BeerExpert();
     ArrayList<String> result = be.getBrands(c);
 
-    out.println("<br>Got beer color " + c);
+//    out.println("Beer Selection Advice<br>");
+//    response.setContentType("text/html");
+//    PrintWriter out = response.getWriter();
+//    out.println("<br>Got beer color " + c);
 
-    Iterator it = result.iterator();
-    while(it.hasNext()){
-      out.print("<br>try "+it.next());
-    }
+    request.setAttribute("styles", result);
+    RequestDispatcher view = request.getRequestDispatcher("result.jsp");
+    view.forward(request, response);
+
+//    Iterator it = result.iterator();
+//    while(it.hasNext()){
+//      out.print("<br>try "+it.next());
+//    }
   }
 }
